@@ -6,7 +6,7 @@ class Enemy {
         this.type = type;
         this.x = x;
         this.y = y;
-        this.grid=grid;
+        this.grid = grid;
         this.direction="n";
         this.bullet = new Bullet(this.x, this.y, this.type);
         this.bullet.morph();
@@ -33,7 +33,7 @@ class Enemy {
 
     drawEnemy() {
         ctx.beginPath();
-        ctx.rect(this.x * 20, this.y * 20, 20, 20);
+        ctx.rect(this.x, this.y, this.grid.boxSize, this.grid.boxSize);
         ctx.fillStyle = '#ff2f34';
         ctx.fill();
     }

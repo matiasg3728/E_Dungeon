@@ -67,7 +67,7 @@ class Enemy {
         this.type = type;
         this.x = x;
         this.y = y;
-        this.grid=grid;
+        this.grid = grid;
         this.direction="n";
         this.bullet = new Bullet(this.x, this.y, this.type);
         this.bullet.morph();
@@ -94,7 +94,7 @@ class Enemy {
 
     drawEnemy() {
         ctx.beginPath();
-        ctx.rect(this.x * 20, this.y * 20, 20, 20);
+        ctx.rect(this.x, this.y, this.grid.boxSize, this.grid.boxSize);
         ctx.fillStyle = '#ff2f34';
         ctx.fill();
     }
@@ -129,7 +129,7 @@ class Grid{
 
 
         this.grid = [];
-        this.boxSize=0;
+        this.boxSize= this.cHeight/this.length;
     }
 
     makeGrid(){
@@ -144,8 +144,31 @@ class Grid{
         //this.boxSize = this.length/size;
     }
     drawGrid(){
-        ctx.beginPath();
-        
+        for(var row = 0;row<this.length;row++){
+            ctx.beginPath();
+            ctx.moveTo(row*this.boxSize, 0);
+            ctx.lineTo(row*this.boxSize, c.height);
+            ctx.stroke();
+            for(var col=0; col<this.length; col++){
+                console.log("grid horizontal");
+                ctx.beginPath();
+                ctx.moveTo(0, col*this.boxSize);
+                ctx.lineTo(0, c.height);
+                ctx.stroke();
+
+            }
+        }
+    }
+
+    toGridLocation(pX,pY){
+        var arry = [];
+
+        var n= pX/this.cWidth;
+        arry.push(n);
+        n=pY/this.cHeight;
+        arry.push(n);
+
+        return arry;
     }
 
     insert(row, col, obj){
@@ -324,8 +347,12 @@ var keys=[];
 
     var gameGrid = new Grid(10, c.width, c.height);
     gameGrid.makeGrid();
-    var enemy = new Enemy(0,0,1);
+
+    var enemy = new Enemy(180,180,1, gameGrid);
+    gameGrid.insert(3,3, enemy);
+
     var player = new Player(0,0, gameGrid);
+    gameGrid.insert(0,0,player);
      animationCanvas();
 
 
@@ -362,6 +389,7 @@ function draw(){
     }
 
     ctx.clearRect(0,0,c.width,c.height);
+    gameGrid.drawGrid();
     player.drawPlayer();
     enemy.drawEnemy();
 }

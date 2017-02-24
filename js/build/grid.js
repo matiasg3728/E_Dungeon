@@ -17,7 +17,7 @@ class Grid{
 
 
         this.grid = [];
-        this.boxSize=0;
+        this.boxSize= this.cHeight/this.length;
     }
 
     makeGrid(){
@@ -32,8 +32,31 @@ class Grid{
         //this.boxSize = this.length/size;
     }
     drawGrid(){
-        ctx.beginPath();
-        
+        for(var row = 0;row<this.length;row++){
+            ctx.beginPath();
+            ctx.moveTo(row*this.boxSize, 0);
+            ctx.lineTo(row*this.boxSize, c.height);
+            ctx.stroke();
+            for(var col=0; col<this.length; col++){
+                console.log("grid horizontal");
+                ctx.beginPath();
+                ctx.moveTo(0, col*this.boxSize);
+                ctx.lineTo(0, c.height);
+                ctx.stroke();
+
+            }
+        }
+    }
+
+    toGridLocation(pX,pY){
+        var arry = [];
+
+        var n= pX/this.cWidth;
+        arry.push(n);
+        n=pY/this.cHeight;
+        arry.push(n);
+
+        return arry;
     }
 
     insert(row, col, obj){

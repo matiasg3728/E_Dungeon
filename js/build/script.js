@@ -11,8 +11,12 @@ var keys=[];
 
     var gameGrid = new Grid(10, c.width, c.height);
     gameGrid.makeGrid();
-    var enemy = new Enemy(0,0,1);
+
+    var enemy = new Enemy(180,180,1, gameGrid);
+    gameGrid.insert(3,3, enemy);
+
     var player = new Player(0,0, gameGrid);
+    gameGrid.insert(0,0,player);
      animationCanvas();
 
 
@@ -49,6 +53,7 @@ function draw(){
     }
 
     ctx.clearRect(0,0,c.width,c.height);
+    gameGrid.drawGrid();
     player.drawPlayer();
     enemy.drawEnemy();
 }
